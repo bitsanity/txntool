@@ -1,0 +1,9 @@
+{
+  "chromium-args": "--enable-logging=stderr",
+  "name": "TXN Tool",
+  "version": "0.1.0",
+  "description": "Ethereum Transaction Tool",
+  "main": "index.html",
+  "dependencies": "{}"
+}
+
