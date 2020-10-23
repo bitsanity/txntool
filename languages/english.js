@@ -15,6 +15,7 @@ STRINGS["English"] = {
   AddrLabel:"Ethereum Address:",
   MyBalanceLabel:"Current Balance:",
   TxCountLabel:"Tx Count/Nonce:",
+  PassphrasePrompt:"Account Passphrase:",
 
   // wallet
   SendFundsLabel:"SEND ETHER",
