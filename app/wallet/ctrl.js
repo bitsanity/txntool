@@ -3,7 +3,11 @@ var WALLETCTRL = (function() {
   var abi;
 
   function initWalletTab() {
-    ACCOUNTMODEL.refreshTxCount();
+    try {
+      ACCOUNTMODEL.refreshTxCount();
+    }
+    catch( e ) { }
+
     WALLETVIEW.clearFields();
 
     if (ACCOUNTMODEL.getUser()) {
@@ -11,6 +15,12 @@ var WALLETCTRL = (function() {
     }
 
     selectedSendEth();
+
+    COMMONMODEL.gasPrice( err => {
+      console.log( err.toString() );
+    }, res => {
+      WALLETVIEW.gasPrice( COMMONVIEW.shiftValueLeftDecimals(res,9) );
+    } );
   }
 
   function selectedSendEth() {
@@ -104,7 +114,11 @@ var WALLETCTRL = (function() {
 
   function calcTokenTx() {
 
-    let tok = ERC20.fetch( WALLETVIEW.getTokenSCA().toLowerCase() );
+    let tok = ERC20.fetch( WALLETVIEW.getTokenSCA().toLowerCase(),
+      err => { console.log(err) },
+      res => {}
+    );
+
     if (null == tok) return;
 
     let to = WALLETVIEW.getTokenToAddress();

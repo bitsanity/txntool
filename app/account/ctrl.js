@@ -2,7 +2,10 @@ var ACCOUNTCTRL = (function() {
 
   function initAccountTab() {
 
-    ACCOUNTMODEL.refreshTxCount();
+    try {
+      ACCOUNTMODEL.refreshTxCount();
+    }
+    catch( e ) { }
 
     setTimeout( () => {
       ACCOUNTMODEL.currentUserBalance( bal => {

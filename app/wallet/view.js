@@ -13,6 +13,7 @@ var WALLETVIEW = (function() {
     $( "#TokenTxValue" ).html( "" );
 
     $( "#SCAValue" ).val( "" );
+    $( '#ContractConfirmed' ).html( "" );
     $( "#ABIValue" ).val( "" );
     $( "#FunctionSelector" ).html( "" );
     $( "#ParameterValues" ).html( "" );

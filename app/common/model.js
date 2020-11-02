@@ -14,17 +14,20 @@ var COMMONMODEL = (function() {
 
   function Ξconnect( wsurl, errcb, rescb ) {
     web3 = new Web3( new Web3.providers.WebsocketProvider(wsurl) );
-    web3.eth.getGasPrice()
-    .then( gp => {
+    ΞgasPrice( errcb, rescb );
+  }
+
+  function ΞgetWeb3() {
+    return web3;
+  }
+
+  function ΞgasPrice( errcb, rescb ) {
+    web3.eth.getGasPrice().then( gp => {
       rescb( gp );
     } )
     .catch( err => {
       errcb( err.toString() );
     } );
-  }
-
-  function ΞgetWeb3() {
-    return web3;
   }
 
   function Ξkeccak( something ) {
@@ -64,6 +67,7 @@ var COMMONMODEL = (function() {
     tokTransferGasUnits:tokTransferGasUnits,
     connect:Ξconnect,
     getWeb3:ΞgetWeb3,
+    gasPrice:ΞgasPrice,
     keccak:Ξkeccak,
     bytesToHex:ΞbytesToHex,
     hexToBytes:ΞhexToBytes,
