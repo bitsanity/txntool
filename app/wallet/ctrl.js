@@ -234,7 +234,7 @@ var WALLETCTRL = (function() {
 
     if (!gasl || parseInt(gasl) == 0) {
       web3.eth.estimateGas( txobj ).then( est => {
-        WALLETVIEW.setGasLimit( est );
+        WALLETVIEW.setGasLimit( est * 1.5 );
         gasl = est;
         txobj.gas = gasl;
       } )
