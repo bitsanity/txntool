@@ -2,15 +2,25 @@ var STRINGS = {};
 
 STRINGS["English"] = {
 
+  // QR dialog
+  BackButton:"Back",
+  IdentChallengeLabel:"ADILOS Identity Challenge",
+  SignChallengeLabel:"Sign Transaction Hash",
+  RespondButton:"Respond",
+  CameraLabel:"Show Your Response",
+  CancelResponseButton:"Cancel",
+
   // tabs
   AccountTabButton:"account",
   WalletTabButton:"wallet",
 
   // account
-  LoginLabel:"LOAD PRIVATE KEY",
-  LoadRawKeyLabel:"Raw Bytes (hex):",
+  LoginLabel:"LOAD ACCOUNT",
+  LoadRawKeyLabel:"Private Key Bytes (hex):",
   OrLabel:"- or -",
   PasteGethFileLabel:"geth file (JSON):",
+  ADILOSLabel:"ADILOS / QR Code:",
+  ADILOSChallengeButton:"Identity Challenge",
   AccountStatusLabel:"ACCOUNT STATUS",
   AddrLabel:"Ethereum Address:",
   MyBalanceLabel:"Current Balance:",
@@ -40,6 +50,7 @@ STRINGS["English"] = {
   GasPriceLabel:"Gas Price:",
   NonceOverrideLabel:"Nonce:",
   TxJSONLabel:"Transaction (JSON):",
+  SignButton:"Sign (SimplΞth)",
   RawSignedTxLabel:"Raw Signed (hex):"
 };
 

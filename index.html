@@ -6,6 +6,7 @@
   <!-- 3rd-party libs -->
   <script src="libs/jquery.min.js"></script>
   <script src="libs/web3.min.js"></script>
+  <script src="libs/qrcode.min.js"></script>
   <script src="libs/keythereum.min.js"></script>
 
   <!-- Theme: SKINS -->
@@ -19,6 +20,8 @@
   <!-- MODELs -->
   <script src="app/common/model.js"></script>
   <script src="app/common/erc20.js"></script>
+  <script src="app/common/qrdialog.js"></script>
+
   <script src="app/account/model.js"></script>
   <script src="app/wallet/model.js"></script>
 
@@ -31,13 +34,72 @@
   <script src="app/common/ctrl.js"></script>
   <script src="app/account/ctrl.js"></script>
   <script src="app/wallet/ctrl.js"></script>
+
+  <script>
+    const CRYPTO = require( 'crypto' );
+    const SECP256K1 = require( 'secp256k1' );
+    const ETHERS = require( 'ethers' ).utils;
+    const ADILOS = require( './libs/adilos' );
+    const ETHJS = require( '@ethereumjs/tx' );
+  </script>
+
 </head>
 
 <body>
+<!-- ADILOS/SIMPLETH QR Challenge Dialog ================================== -->
+<div id=QRDialog>
+<table width=100%>
+<tr>
+  <td align=left>
+    <button id=BackButton onclick="COMMONCTRL.setMainScreen(true)">
+    </button>
+</tr>
+<tr>
+  <td class="label" align=center valign=top width=100%>
+    <div id="ChallengeLabel"></div>
+  </td>
+</tr>
+<tr>
+  <td align=center bgcolor=white height=500>
+    <span id="ChallengeArea"></span>
+  </td>
+</tr>
+<tr>
+  <td align=center>
+    <button id=RespondButton
+      onclick="COMMONCTRL.respond()">
+    </button>
+</tr>
+</table>
+</div>
+
+<!-- Camera/Video Dialog ================================================== -->
+<div id=CameraDialog>
+<table width=100%>
+<tr>
+  <td class="label" align=center valign=top width=100%>
+    <div id="CameraLabel"></div>
+  </td>
+</tr>
+<tr>
+  <td align=center bgcolor=white height=500>
+    <video id="ScannerVideo"
+           width=500 height=500
+           muted autoplay playsinline></video>
+  </td>
+</tr>
+<tr>
+  <td align=center>
+    <button id=CancelResponseButton
+      onclick="COMMONCTRL.cancelResponse()">
+    </button>
+</tr>
+</table>
+</div>
 
 <!-- TAB BUTTONS ========================================================== -->
 
-<div class="tab">
+<div id=TabButtons class="tab">
   <button class="tablinks" id="AccountTabButton" onclick="COMMONVIEW.openTab(event, 'AccountTab');ACCOUNTCTRL.initAccountTab();" />
   <button class="tablinks" id="WalletTabButton" onclick="COMMONVIEW.openTab(event, 'WalletTab');WALLETCTRL.initWalletTab();" />
 </div>
@@ -69,6 +131,20 @@
       onchange="ACCOUNTCTRL.ingestGeth()"></textarea>
   </td>
 </tr>
+<tr>
+  <td/>
+  <td><div id="OrLabel2" class=label /></td>
+</tr>
+
+<tr>
+  <td align=right><div id="ADILOSLabel" class="label" /></td>
+  <td align=left>
+    <button id=ADILOSChallengeButton
+      onclick="ACCOUNTCTRL.identityChallenge()">
+    </button>
+  </td>
+</tr>
+
 <tr>
   <td>&nbsp;</td>
 </tr>
@@ -237,16 +313,73 @@
       </textarea>
   </td>
 </tr>
+<tr>
+  <td/>
+  <td>
+    <button id=SignButton onclick="WALLETCTRL.obtainSignature()"></button>
+  </td>
+</tr>
 </table>
 
 </div>
+
+<!--
+<script type="module">
+  import { Transaction } from "@ethereumjs/tx";
+  global.Transaction = Transaction;
+</script>
+-->
+
+<script type="module">
+  import QrScanner from "./node_modules/qr-scanner/qr-scanner.min.js";
+  QrScanner.WORKER_PATH = "./node_modules/qr-scanner/qr-scanner-worker.min.js";
+
+  var scancb;
+  var scanner;
+
+  global.setVideo = function(video) {
+    if (scanner) {
+      scanner.destroy();
+    }
+
+    scanner = new QrScanner( video, result => {
+      result = result.replace(/\s/g, '');
+      scancb( result );
+    } );
+  }
+
+  global.startQRScanner = function() {
+    if (scanner) scanner.start();
+  }
+
+  global.pauseQRScanner = function() {
+    if (scanner) scanner.pause();
+  }
+
+  global.setScannerCallback = function( cb ) {
+    scancb = cb;
+  }
+
+</script>
 
 <script type="text/javascript">
   window.resizeTo( 980, 825 );
   LABELS.setLabels();
   SKINS.setSkin();
 
-  COMMONMODEL.connect( "ws://localhost:8546",
+  COMMONCTRL.setMainScreen( true );
+
+  function setup() {
+    global.setVideo( document.getElementById("ScannerVideo") );
+    global.setScannerCallback( (res) => {
+      global.pauseQRScanner();
+      COMMONCTRL.qrScanned( res );
+    } );
+  }
+
+  setTimeout( setup, 250 );
+
+  COMMONMODEL.connect( "ws://localhost:8545",
     err => {
       console.log( err );
     },

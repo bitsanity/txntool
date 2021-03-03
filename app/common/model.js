@@ -62,6 +62,10 @@ var COMMONMODEL = (function() {
     return web3.utils.utf8ToHex( str );
   }
 
+  function toHex( any ) {
+    return web3.utils.toHex( any );
+  }
+
   return {
     ethTransferGasUnits:ethTransferGasUnits,
     tokTransferGasUnits:tokTransferGasUnits,
@@ -73,7 +77,8 @@ var COMMONMODEL = (function() {
     hexToBytes:ΞhexToBytes,
     fromWei:ΞfromWei,
     amountToWei:amountToWei,
-    toUtf8Hex:toUtf8Hex
+    toUtf8Hex:toUtf8Hex,
+    toHex:toHex
   };
 
 })();

@@ -1,6 +1,7 @@
 var WALLETCTRL = (function() {
 
   var abi;
+  var txobj;
 
   function initWalletTab() {
     try {
@@ -35,10 +36,11 @@ var WALLETCTRL = (function() {
     WALLETVIEW.opSelected( 2 );
   }
 
-  function setTxFields( txobj ) {
+  function setTxFields() {
 
-    if (COMMONMODEL.getWeb3() && ACCOUNTMODEL.getUser()) {
+    let user = ACCOUNTMODEL.getUser();
 
+    if (COMMONMODEL.getWeb3() && user != null && user.privkey != null) {
       COMMONMODEL.getWeb3().eth.accounts.signTransaction(
         txobj, ACCOUNTMODEL.getUser().privkey.toString('hex') )
       .then( sigtx => {
@@ -65,7 +67,7 @@ var WALLETCTRL = (function() {
       let gasu = COMMONMODEL.ethTransferGasUnits();
       if (cdat) gasu += cdat.length * 100; // should be 68, but safety margin
 
-      let txobj = {
+      txobj = {
         from: ACCOUNTMODEL.getUser().address,
         to: toaddr,
         value: COMMONVIEW.shiftValueRightDecimals(amt, 18),
@@ -75,7 +77,7 @@ var WALLETCTRL = (function() {
       };
       if (cdat) txobj.data = COMMONMODEL.toUtf8Hex(cdat);
 
-      setTxFields( txobj );
+      setTxFields();
     }
     else if (op == 1) {
       calcTokenTx();
@@ -139,7 +141,7 @@ var WALLETCTRL = (function() {
       nonce: WALLETVIEW.nonce()
     };
 
-    setTxFields( txobj );
+    setTxFields();
   }
 
   function contractSelected( sca ) {
@@ -242,7 +244,65 @@ var WALLETCTRL = (function() {
     }
 
     txobj.gas = gasl;
-    setTxFields( txobj );
+    setTxFields();
+  }
+
+  function obtainSignature() {
+
+    // same as txobj but all the values are hex
+    let hexobj = {
+      nonce: COMMONMODEL.toHex(txobj.nonce),
+      gasPrice: COMMONMODEL.toHex(txobj.gasPrice),
+      gasLimit: COMMONMODEL.toHex(txobj.gas),
+      to: txobj.to,
+      value: COMMONMODEL.toHex(txobj.value),
+      data: txobj.data
+    };
+
+    let tx = ETHJS.Transaction.fromTxData( hexobj );
+    let hash = COMMONMODEL.bytesToHex( tx.getMessageToSign() );
+
+    COMMONCTRL.setCallback( sigScanned );
+    COMMONCTRL.setMainScreen( false );
+    QRDIALOG.showQR( false, hash );
+  }
+
+  function sigScanned( rspHexStr ) {
+    global.pauseQRScanner();
+
+    let lc = rspHexStr.toLowerCase();
+    if (!lc.startsWith('0x'))
+      lc = '0x' + lc;
+
+    let sigbytes = COMMONMODEL.hexToBytes( lc );
+    let dersig = Uint8Array.from( sigbytes );
+    let sigobj = SECP256K1.signatureImport( dersig );
+    let sigR = sigobj.subarray( 0, 32 );
+    let sigS = sigobj.subarray( 32, 64 );
+    let chainId = 1; // mainnet
+    let sigV = chainId * 2 + 8;
+
+    let hextx = {
+      nonce: COMMONMODEL.toHex(txobj.nonce),
+      gasPrice: COMMONMODEL.toHex(txobj.gasPrice),
+      gasLimit: COMMONMODEL.toHex(txobj.gas),
+      to: txobj.to,
+      value: COMMONMODEL.toHex(txobj.value),
+      data: (txobj.data && txobj.data.length > 1) ? txobj.data : [],
+      v: sigV,
+      r: sigR,
+      s: sigS
+    }
+
+    let signedtx = ETHJS.Transaction.fromTxData( hextx );
+    let serializedtx = signedtx.serialize();
+
+    WALLETVIEW.signedTransaction( COMMONMODEL.toHex(serializedtx) );
+
+    if (txobj.data)
+      txobj.data = txobj.data.substring(0,10) + "...";
+
+    WALLETVIEW.setTransaction( JSON.stringify(txobj,null,2) );
   }
 
   return {
@@ -255,7 +315,9 @@ var WALLETCTRL = (function() {
     contractSelected:contractSelected,
     abiChanged:abiChanged,
     functionSelected:functionSelected,
-    calcContractTx:calcContractTx
+    calcContractTx:calcContractTx,
+    obtainSignature:obtainSignature,
+    sigScanned:sigScanned
   };
 
 })();

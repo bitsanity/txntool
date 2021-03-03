@@ -1,5 +1,7 @@
 var ACCOUNTCTRL = (function() {
 
+  var challengeB64;
+
   function initAccountTab() {
 
     try {
@@ -39,10 +41,31 @@ var ACCOUNTCTRL = (function() {
     );
   }
 
+  function identityChallenge() {
+    let randomSessionKey = CRYPTO.randomBytes(32);
+    challengeB64 = ADILOS.makeChallenge( randomSessionKey );
+
+    COMMONCTRL.setCallback( qrScanned );
+    COMMONCTRL.setMainScreen( false );
+    QRDIALOG.showQR( true, challengeB64 );
+  }
+
+  function qrScanned( respB64 ) {
+    global.pauseQRScanner();
+    let userpubkey = ADILOS.validateResponse( respB64, challengeB64 );
+    if (userpubkey) {
+      ACCOUNTMODEL.loadUserByPublicKey( userpubkey );
+    }
+    else
+      alert( 'something fucky' );
+  }
+
   return {
     initAccountTab:initAccountTab,
     ingestRawKey:ingestRawKey,
-    ingestGeth:ingestGeth
+    ingestGeth:ingestGeth,
+    identityChallenge:identityChallenge,
+    qrScanned:qrScanned
   };
 
 })();

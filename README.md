@@ -30,3 +30,5 @@ transactions that you can later provide to a public Ethereum gateway.
 3. Includes minimized versions of jQuery, keythereum and web3 that may not be
    the latest.
 
+4. Includes altered version of npm module secp256k1. See
+   [github](https://github.com/cryptocoinjs/secp256k1-node/issues/175) issue.

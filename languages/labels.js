@@ -6,6 +6,13 @@ var LABELS = (function() {
 
   function setLabels()
   {
+    // dialogs
+    $( "#BackButton").html( STRINGS[LANG].BackButton );
+    $( "#ChallengeLabel").html( STRINGS[LANG].IdentChallengeLabel );
+    $( "#RespondButton").html( STRINGS[LANG].RespondButton );
+    $( "#CameraLabel").html( STRINGS[LANG].CameraLabel );
+    $( "#CancelResponseButton").html( STRINGS[LANG].CancelResponseButton );
+
     // tab button labels
     $( "#AccountTabButton").html( STRINGS[LANG].AccountTabButton );
     $( "#WalletTabButton").html( STRINGS[LANG].WalletTabButton );
@@ -15,6 +22,9 @@ var LABELS = (function() {
     $( "#LoginLabel" ).html( STRINGS[LANG].LoginLabel );
     $( "#LoadRawKeyLabel" ).html( STRINGS[LANG].LoadRawKeyLabel );
     $( "#OrLabel" ).html( STRINGS[LANG].OrLabel );
+    $( "#OrLabel2" ).html( STRINGS[LANG].OrLabel );
+    $( "#ADILOSLabel" ).html( STRINGS[LANG].ADILOSLabel );
+    $( "#ADILOSChallengeButton" ).html( STRINGS[LANG].ADILOSChallengeButton );
     $( "#PasteGethFileLabel" ).html( STRINGS[LANG].PasteGethFileLabel );
     $( "#AccountStatusLabel" ).html( STRINGS[LANG].AccountStatusLabel );
     $( "#AddrLabel" ).html( STRINGS[LANG].AddrLabel );
@@ -45,6 +55,7 @@ var LABELS = (function() {
     $( "#GasPriceLabel" ).html( STRINGS[LANG].GasPriceLabel );
     $( "#NonceOverrideLabel" ).html( STRINGS[LANG].NonceOverrideLabel );
     $( "#TxJSONLabel" ).html( STRINGS[LANG].TxJSONLabel );
+    $( "#SignButton" ).html( STRINGS[LANG].SignButton );
     $( "#RawSignedTxLabel" ).html( STRINGS[LANG].RawSignedTxLabel );
   }
 

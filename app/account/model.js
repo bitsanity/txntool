@@ -42,6 +42,17 @@ var ACCOUNTMODEL = (function() {
     rescb();
   }
 
+  function loadUserByPublicKey( pubkeybytes ) {
+    let uncompkey = SECP256K1.publicKeyConvert( pubkeybytes, false );
+
+    let pubhex = '0x' + Buffer.from(uncompkey).slice(1).toString('hex');
+    console.log( 'pubhex: ' + pubhex );
+
+    User.address = '0x' + ETHERS.keccak256( pubhex ).slice(26);
+    User.privkey = null;
+    refreshTxCount();
+  }
+
   function privkeyToKeyObject( privkey ) {
     let addr = global.keythereum.privateKeyToAddress(privkey).toLowerCase();
     if (!addr || addr.length == 0) throw "Address fail";
@@ -108,6 +119,7 @@ var ACCOUNTMODEL = (function() {
     currentUserBalance:currentUserBalance,
     loadUserByGeth:loadUserByGeth,
     loadUserByRawKey:loadUserByRawKey,
+    loadUserByPublicKey:loadUserByPublicKey,
     refreshTxCount:refreshTxCount,
     sendEth:sendEth
   };
