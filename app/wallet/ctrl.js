@@ -9,7 +9,7 @@ var WALLETCTRL = (function() {
     }
     catch( e ) { }
 
-    WALLETVIEW.clearFields();
+//  WALLETVIEW.clearFields();
 
     if (ACCOUNTMODEL.getUser()) {
       setTimeout( WALLETVIEW.nonce(ACCOUNTMODEL.getUser().nonce), 500 );
@@ -50,9 +50,10 @@ var WALLETCTRL = (function() {
         if (txobj.data)
           txobj.data = txobj.data.substring(0,10) + "...";
 
-        WALLETVIEW.setTransaction( JSON.stringify(txobj,null,2) );
       } ).catch( err => { console.log( err ); } );
     }
+
+    WALLETVIEW.setTransaction( JSON.stringify(txobj,null,2) );
   }
 
   function calcTx() {
@@ -248,6 +249,7 @@ var WALLETCTRL = (function() {
   }
 
   function obtainSignature() {
+    WALLETVIEW.signedTransaction("");
 
     // same as txobj but all the values are hex
     let hexobj = {
@@ -274,13 +276,20 @@ var WALLETCTRL = (function() {
     if (!lc.startsWith('0x'))
       lc = '0x' + lc;
 
-    let sigbytes = COMMONMODEL.hexToBytes( lc );
-    let dersig = Uint8Array.from( sigbytes );
+    let msgarray = COMMONMODEL.hexToBytes( lc );
+    let recovid = msgarray.pop();
+
+    let dersig = Uint8Array.from( msgarray );
     let sigobj = SECP256K1.signatureImport( dersig );
+
     let sigR = sigobj.subarray( 0, 32 );
     let sigS = sigobj.subarray( 32, 64 );
-    let chainId = 1; // mainnet
-    let sigV = chainId * 2 + 8;
+
+    // start here ...
+    // https://ethereum.stackexchange.com/questions/42455/
+    //   during-ecdsa-signing-how-do-i-generate-the-recovery-id
+
+    let sigV = 1 * 2 + 35 + recovid;
 
     let hextx = {
       nonce: COMMONMODEL.toHex(txobj.nonce),
@@ -297,12 +306,9 @@ var WALLETCTRL = (function() {
     let signedtx = ETHJS.Transaction.fromTxData( hextx );
     let serializedtx = signedtx.serialize();
 
+    initWalletTab();
+    setTxFields();
     WALLETVIEW.signedTransaction( COMMONMODEL.toHex(serializedtx) );
-
-    if (txobj.data)
-      txobj.data = txobj.data.substring(0,10) + "...";
-
-    WALLETVIEW.setTransaction( JSON.stringify(txobj,null,2) );
   }
 
   return {

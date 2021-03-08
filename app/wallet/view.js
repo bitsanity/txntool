@@ -32,8 +32,6 @@ var WALLETVIEW = (function() {
       if ($("#WalletOpCallContract").prop("checked")) return 2;
     }
 
-    WALLETVIEW.clearFields();
-
     if (op == 0) {
       $( "#WalletOpSendEth" ).prop( "checked", true );
       $( "#SendEthWidgets" ).show();

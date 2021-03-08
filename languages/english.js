@@ -4,7 +4,7 @@ STRINGS["English"] = {
 
   // QR dialog
   BackButton:"Back",
-  IdentChallengeLabel:"ADILOS Identity Challenge",
+  IdentChallengeLabel:"Identity Challenge",
   SignChallengeLabel:"Sign Transaction Hash",
   RespondButton:"Respond",
   CameraLabel:"Show Your Response",
@@ -19,7 +19,7 @@ STRINGS["English"] = {
   LoadRawKeyLabel:"Private Key Bytes (hex):",
   OrLabel:"- or -",
   PasteGethFileLabel:"geth file (JSON):",
-  ADILOSLabel:"ADILOS / QR Code:",
+  ADILOSLabel:"QR Code Swap:",
   ADILOSChallengeButton:"Identity Challenge",
   AccountStatusLabel:"ACCOUNT STATUS",
   AddrLabel:"Ethereum Address:",
