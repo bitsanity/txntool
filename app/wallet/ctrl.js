@@ -9,10 +9,11 @@ var WALLETCTRL = (function() {
     }
     catch( e ) { }
 
-//  WALLETVIEW.clearFields();
-
     if (ACCOUNTMODEL.getUser()) {
-      setTimeout( WALLETVIEW.nonce(ACCOUNTMODEL.getUser().nonce), 500 );
+      setTimeout( function() { 
+          WALLETVIEW.nonce(ACCOUNTMODEL.getUser().nonce);
+          calcTx();
+        }, 250 );
     }
 
     selectedSendEth();
@@ -58,7 +59,7 @@ var WALLETCTRL = (function() {
 
   function calcTx() {
     WALLETVIEW.setTransaction( "" );
-    WALLETVIEW.signedTransaction( "" );
+    //WALLETVIEW.signedTransaction( "" );
 
     let op = WALLETVIEW.opSelected();
     if (op == 0) {
@@ -311,6 +312,17 @@ var WALLETCTRL = (function() {
     WALLETVIEW.signedTransaction( COMMONMODEL.toHex(serializedtx) );
   }
 
+  function sendTransaction() {
+    let rawTxHex = WALLETVIEW.signedTransaction();
+
+    if (!rawTxHex || rawTxHex.length == 0) {
+      console.log( 'nothing to do' );
+      return;
+    }
+
+    COMMONMODEL.sendRawTx( rawTxHex );
+  }
+
   return {
     initWalletTab:initWalletTab,
     selectedSendEth:selectedSendEth,
@@ -323,7 +335,8 @@ var WALLETCTRL = (function() {
     functionSelected:functionSelected,
     calcContractTx:calcContractTx,
     obtainSignature:obtainSignature,
-    sigScanned:sigScanned
+    sigScanned:sigScanned,
+    sendTransaction:sendTransaction
   };
 
 })();

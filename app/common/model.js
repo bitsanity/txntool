@@ -66,6 +66,17 @@ var COMMONMODEL = (function() {
     return web3.utils.toHex( any );
   }
 
+  function sendRawTx( txhex ) {
+    web3.eth.sendSignedTransaction( txhex, (err,res) => {
+      if (err) {
+        setTimeout( COMMONVIEW.userAlert( err ), 250 );
+        return;
+      }
+
+      setTimeout( COMMONVIEW.userAlert( "Tx: " + res ), 250 );
+    } );
+  }
+
   return {
     ethTransferGasUnits:ethTransferGasUnits,
     tokTransferGasUnits:tokTransferGasUnits,
@@ -78,7 +89,8 @@ var COMMONMODEL = (function() {
     fromWei:ΞfromWei,
     amountToWei:amountToWei,
     toUtf8Hex:toUtf8Hex,
-    toHex:toHex
+    toHex:toHex,
+    sendRawTx:sendRawTx
   };
 
 })();

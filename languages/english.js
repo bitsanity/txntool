@@ -6,7 +6,7 @@ STRINGS["English"] = {
   BackButton:"Back",
   IdentChallengeLabel:"Identity Challenge",
   SignChallengeLabel:"Sign Transaction Hash",
-  RespondButton:"Respond",
+  RespondButton:"Scan Response",
   CameraLabel:"Show Your Response",
   CancelResponseButton:"Cancel",
 
@@ -50,7 +50,8 @@ STRINGS["English"] = {
   GasPriceLabel:"Gas Price:",
   NonceOverrideLabel:"Nonce:",
   TxJSONLabel:"Transaction (JSON):",
+  RawSignedTxLabel:"Raw Signed (hex):",
   SignButton:"Sign (SimplΞth)",
-  RawSignedTxLabel:"Raw Signed (hex):"
+  SendButton:"Send Raw Txn"
 };
 

@@ -317,18 +317,13 @@
   <td/>
   <td>
     <button id=SignButton onclick="WALLETCTRL.obtainSignature()"></button>
+    &nbsp;&nbsp;&nbsp;
+    <button id=SendButton onclick="WALLETCTRL.sendTransaction()"></button>
   </td>
 </tr>
 </table>
 
 </div>
-
-<!--
-<script type="module">
-  import { Transaction } from "@ethereumjs/tx";
-  global.Transaction = Transaction;
-</script>
--->
 
 <script type="module">
   import QrScanner from "./node_modules/qr-scanner/qr-scanner.min.js";

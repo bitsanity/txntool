@@ -55,8 +55,9 @@ var LABELS = (function() {
     $( "#GasPriceLabel" ).html( STRINGS[LANG].GasPriceLabel );
     $( "#NonceOverrideLabel" ).html( STRINGS[LANG].NonceOverrideLabel );
     $( "#TxJSONLabel" ).html( STRINGS[LANG].TxJSONLabel );
-    $( "#SignButton" ).html( STRINGS[LANG].SignButton );
     $( "#RawSignedTxLabel" ).html( STRINGS[LANG].RawSignedTxLabel );
+    $( "#SignButton" ).html( STRINGS[LANG].SignButton );
+    $( "#SendButton" ).html( STRINGS[LANG].SendButton );
   }
 
   return {
