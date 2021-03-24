@@ -46,7 +46,6 @@ var ACCOUNTMODEL = (function() {
     let uncompkey = SECP256K1.publicKeyConvert( pubkeybytes, false );
 
     let pubhex = '0x' + Buffer.from(uncompkey).slice(1).toString('hex');
-    console.log( 'pubhex: ' + pubhex );
 
     User.address = '0x' + ETHERS.keccak256( pubhex ).slice(26);
     User.privkey = null;

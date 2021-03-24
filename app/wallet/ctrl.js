@@ -16,8 +16,6 @@ var WALLETCTRL = (function() {
         }, 250 );
     }
 
-    selectedSendEth();
-
     COMMONMODEL.gasPrice( err => {
       console.log( err.toString() );
     }, res => {
@@ -100,6 +98,7 @@ var WALLETCTRL = (function() {
           return;
         }
 
+        if (ACCOUNTMODEL.getUser()) {
         tok.balanceOf(
           ACCOUNTMODEL.getUser().address,
           err => { console.log( err.toString() ) },
@@ -110,6 +109,10 @@ var WALLETCTRL = (function() {
             let val = COMMONVIEW.shiftValueLeftDecimals( res, tok.decimals() );
             WALLETVIEW.setTokenBalance( val );
           } );
+        }
+        else {
+          WALLETVIEW.setTokenBalance( 0 );
+        }
 
         calcTokenTx();
       }
@@ -134,15 +137,17 @@ var WALLETCTRL = (function() {
     let web3 = COMMONMODEL.getWeb3();
     let con = new web3.eth.Contract( ERC20.ABI, tok.sca() );
     let calldata = con.methods.transfer( to, quant ).encodeABI();
-    let txobj = {
-      from: ACCOUNTMODEL.getUser().address,
+
+    txobj = {
       to: tok.sca(),
       data: calldata,
       gas: ERC20.TRANSFERGAS,
       gasPrice: (WALLETVIEW.gasPrice() * 1e09),
       nonce: WALLETVIEW.nonce()
     };
-
+    if (ACCOUNTMODEL.getUser().address) {
+      txobj.from = '' + ACCOUNTMODEL.getUser().address;
+    }
     setTxFields();
   }
 
@@ -216,12 +221,15 @@ var WALLETCTRL = (function() {
       COMMONVIEW.shiftValueRightDecimals( WALLETVIEW.getContractValue(), 18 );
     let gasl = WALLETVIEW.getGasLimit();
 
-    let txobj = {
-      from: ACCOUNTMODEL.getUser().address,
+    txobj = {
       to: sca,
       gasPrice: (WALLETVIEW.gasPrice() * 1e09),
       nonce: WALLETVIEW.nonce()
     };
+
+    if (ACCOUNTMODEL.getUser().address) {
+      txobj.from = '' + ACCOUNTMODEL.getUser().address;
+    }
 
     if (val && parseInt(val) != 0)
       txobj.value = val;
