@@ -39,7 +39,7 @@
     const CRYPTO = require( 'crypto' );
     const SECP256K1 = require( 'secp256k1' );
     const ETHERS = require( 'ethers' ).utils;
-    const ADILOS = require( './libs/adilos' );
+    const ADILOS = require( 'adilosjs' );
     const ETHJS = require( '@ethereumjs/tx' );
   </script>
 
@@ -363,6 +363,7 @@
   SKINS.setSkin();
 
   COMMONCTRL.setMainScreen( true );
+  WALLETVIEW.opSelected( 0 );
 
   function setup() {
     global.setVideo( document.getElementById("ScannerVideo") );
