@@ -246,9 +246,11 @@ var WALLETCTRL = (function() {
 
     if (!gasl || parseInt(gasl) == 0) {
       web3.eth.estimateGas( txobj ).then( est => {
-        WALLETVIEW.setGasLimit( est * 1.5 );
-        gasl = est;
+        let estint = parseInt( est * 1.5 )
+        WALLETVIEW.setGasLimit( estint )
+        gasl = estint;
         txobj.gas = gasl;
+        setTxFields();
       } )
       .catch( e => { console.log(e) } );
     }

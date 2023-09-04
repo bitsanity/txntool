@@ -24,16 +24,19 @@
 
   <script src="app/account/model.js"></script>
   <script src="app/wallet/model.js"></script>
+  <script src="app/settings/model.js"></script>
 
   <!-- VIEWs -->
   <script src="app/common/view.js"></script>
   <script src="app/account/view.js"></script>
   <script src="app/wallet/view.js"></script>
+  <script src="app/settings/view.js"></script>
 
   <!-- CONTROLLERs -->
   <script src="app/common/ctrl.js"></script>
   <script src="app/account/ctrl.js"></script>
   <script src="app/wallet/ctrl.js"></script>
+  <script src="app/settings/ctrl.js"></script>
 
   <script>
     const CRYPTO = require( 'crypto' );
@@ -102,6 +105,7 @@
 <div id=TabButtons class="tab">
   <button class="tablinks" id="AccountTabButton" onclick="COMMONVIEW.openTab(event, 'AccountTab');ACCOUNTCTRL.initAccountTab();" />
   <button class="tablinks" id="WalletTabButton" onclick="COMMONVIEW.openTab(event, 'WalletTab');WALLETCTRL.initWalletTab();" />
+  <button class="tablinks" id="SettingsTabButton" onclick="COMMONVIEW.openTab(event, 'SettingsTab');SETTINGSCTRL.initSettingsTab();" />
 </div>
 
 <!-- ACCOUNT TAB ========================================================== -->
@@ -112,10 +116,11 @@
   <td><div id="LoginLabel" class=label /></td>
 </tr>
 <tr>
-  <td align=right><div id="LoadRawKeyLabel" class="label" /></td>
-  <td>
-    <input id="LoadRawKeyField" class=redtext type=text size=70 maxlength=66
-      onchange="ACCOUNTCTRL.ingestRawKey()" />
+  <td align=right><div id="ADILOSLabel" class="label" /></td>
+  <td align=left>
+    <button id=ADILOSChallengeButton
+      onclick="ACCOUNTCTRL.identityChallenge()">
+    </button>
   </td>
 </tr>
 <tr>
@@ -135,16 +140,13 @@
   <td/>
   <td><div id="OrLabel2" class=label /></td>
 </tr>
-
 <tr>
-  <td align=right><div id="ADILOSLabel" class="label" /></td>
-  <td align=left>
-    <button id=ADILOSChallengeButton
-      onclick="ACCOUNTCTRL.identityChallenge()">
-    </button>
+  <td align=right><div id="LoadRawKeyLabel" class="label" /></td>
+  <td>
+    <input id="LoadRawKeyField" class=redtext type=text size=70 maxlength=66
+      onchange="ACCOUNTCTRL.ingestRawKey()" />
   </td>
 </tr>
-
 <tr>
   <td>&nbsp;</td>
 </tr>
@@ -325,6 +327,19 @@
 
 </div>
 
+<!-- SETTINGS TAB ========================================================= -->
+
+<div id="SettingsTab" class="tabcontent">
+<table>
+<tr>
+  <td class="label" align=right><div id="WEB3URLLabel"></div></td>
+  <td><input id="Web3URLValue" type=text size=30 class=data value="ws://"
+        onchange="SETTINGSCTRL.setURL(this.value)" />
+  </td>
+</tr>
+</table>
+</div>
+
 <script type="module">
   import QrScanner from "./node_modules/qr-scanner/qr-scanner.min.js";
   QrScanner.WORKER_PATH = "./node_modules/qr-scanner/qr-scanner-worker.min.js";
@@ -358,7 +373,7 @@
 </script>
 
 <script type="text/javascript">
-  window.resizeTo( 980, 825 );
+  window.resizeTo( 980, 850 );
   LABELS.setLabels();
   SKINS.setSkin();
 
@@ -375,14 +390,6 @@
 
   setTimeout( setup, 250 );
 
-  COMMONMODEL.connect( "ws://localhost:8545",
-    err => {
-      console.log( err );
-    },
-    res => {
-      console.log( "connected" );
-    }
-  );
 </script>
 
 </body>

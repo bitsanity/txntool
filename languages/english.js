@@ -13,14 +13,15 @@ STRINGS["English"] = {
   // tabs
   AccountTabButton:"account",
   WalletTabButton:"wallet",
+  SettingsTabButton:"settings",
 
   // account
-  LoginLabel:"LOAD ACCOUNT",
-  LoadRawKeyLabel:"Private Key Bytes (hex):",
+  LoginLabel:"IDENTIFY ACCOUNT",
+  LoadRawKeyLabel:"Private Key (hex):",
   OrLabel:"- or -",
-  PasteGethFileLabel:"geth file (JSON):",
-  ADILOSLabel:"QR Code Swap:",
-  ADILOSChallengeButton:"Identity Challenge",
+  PasteGethFileLabel:"geth File (JSON):",
+  ADILOSLabel:"QR Exchange:",
+  ADILOSChallengeButton:"Create Challenge",
   AccountStatusLabel:"ACCOUNT STATUS",
   AddrLabel:"Ethereum Address:",
   MyBalanceLabel:"Current Balance:",
@@ -39,7 +40,7 @@ STRINGS["English"] = {
   TokenToLabel:"To Address:",
   TokenAmountLabel:"Quantity:",
 
-  CallContractLabel:"CALL SMART CONTRACT",
+  CallContractLabel:"CALL A SMART CONTRACT",
   SCALabel:"Smart Contract Address:",
   ABILabel:"Contract ABI (JSON):",
   FunctionLabel:"Call Function:",
@@ -52,6 +53,9 @@ STRINGS["English"] = {
   TxJSONLabel:"Transaction (JSON):",
   RawSignedTxLabel:"Raw Signed (hex):",
   SignButton:"Sign (SimplΞth)",
-  SendButton:"Send Raw Txn"
+  SendButton:"Send Raw Txn",
+
+  // settings
+  WEB3URLLabel:"Web3 Service URL:"
 };
 

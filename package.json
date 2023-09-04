@@ -6,6 +6,7 @@
   "main": "index.html",
   "dependencies": {
     "@ethereumjs/tx": "^3.0.2",
+    "adilosjs": "^1.0.0",
     "ethers": "^5.0.31",
     "qr-scanner": "^1.2.0",
     "secp256k1": "^4.0.2"

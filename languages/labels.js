@@ -16,6 +16,8 @@ var LABELS = (function() {
     // tab button labels
     $( "#AccountTabButton").html( STRINGS[LANG].AccountTabButton );
     $( "#WalletTabButton").html( STRINGS[LANG].WalletTabButton );
+    $( "#SettingsTabButton").html( STRINGS[LANG].SettingsTabButton );
+
     $( "#SmartContractTabButton").html( STRINGS[LANG].SmartContractTabButton );
 
     // account
@@ -58,6 +60,9 @@ var LABELS = (function() {
     $( "#RawSignedTxLabel" ).html( STRINGS[LANG].RawSignedTxLabel );
     $( "#SignButton" ).html( STRINGS[LANG].SignButton );
     $( "#SendButton" ).html( STRINGS[LANG].SendButton );
+
+    // settings
+    $( "#WEB3URLLabel" ).html( STRINGS[LANG].WEB3URLLabel )
   }
 
   return {

@@ -1,0 +1,6 @@
+var SETTINGSMODEL = (function() {
+
+  return {}
+
+})();
+
