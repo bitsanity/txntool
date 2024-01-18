@@ -87,6 +87,11 @@ var WALLETVIEW = (function() {
     return $( "#TokenAmountValue" ).val();
   }
 
+  function gasLimit( val ) {
+    if (!val) return $( "#GasLimitValue" ).val();
+    $( "#GasLimitValue" ).val( val );
+  }
+
   function gasPrice( val ) {
     if (!val) return $( "#GasPriceValue" ).val();
     $( "#GasPriceValue" ).val( val );
@@ -177,14 +182,6 @@ var WALLETVIEW = (function() {
     return $( '#ValuePayableValue' ).val();
   }
 
-  function getGasLimit() {
-    return $( '#GasLimitValue' ).val();
-  }
-
-  function setGasLimit( val ) {
-    $( '#GasLimitValue' ).val( val );
-  }
-
   return {
     opSelected:opSelected,
     getToAddress:getToAddress,
@@ -205,8 +202,7 @@ var WALLETVIEW = (function() {
     setParameters:setParameters,
     getParameterValues:getParameterValues,
     getContractValue:getContractValue,
-    getGasLimit:getGasLimit,
-    setGasLimit:setGasLimit,
+    gasLimit:gasLimit,
     gasPrice:gasPrice,
     nonce:nonce,
     setTransaction:setTransaction,

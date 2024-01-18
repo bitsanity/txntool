@@ -3,8 +3,7 @@ var COMMONMODEL = (function() {
   var web3;
 
   function ethTransferGasUnits() {
-    // 21000 plus a little for fallback logic - remember excess is returned
-    return 33000;
+    return 21000;
   }
 
   function tokTransferGasUnits() {

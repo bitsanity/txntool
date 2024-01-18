@@ -21,18 +21,23 @@ var WALLETCTRL = (function() {
     }, res => {
       WALLETVIEW.gasPrice( COMMONVIEW.shiftValueLeftDecimals(res,9) );
     } );
+
+    selectedSendEth()
   }
 
   function selectedSendEth() {
     WALLETVIEW.opSelected( 0 );
+    WALLETVIEW.gasLimit( COMMONMODEL.ethTransferGasUnits() )
   }
 
   function selectedTransfer() {
     WALLETVIEW.opSelected( 1 );
+    WALLETVIEW.gasLimit( COMMONMODEL.tokTransferGasUnits() )
   }
 
   function selectedCallContract() {
     WALLETVIEW.opSelected( 2 );
+    WALLETVIEW.gasLimit( "" )
   }
 
   function setTxFields() {
@@ -64,7 +69,7 @@ var WALLETCTRL = (function() {
       let toaddr = WALLETVIEW.getToAddress();
       let amt = WALLETVIEW.getAmount();
       let cdat = WALLETVIEW.getCalldata();
-      let gasu = COMMONMODEL.ethTransferGasUnits();
+      let gasu = parseInt( WALLETVIEW.gasLimit() );
       if (cdat) gasu += cdat.length * 100; // should be 68, but safety margin
 
       txobj = {
@@ -141,7 +146,7 @@ var WALLETCTRL = (function() {
     txobj = {
       to: tok.sca(),
       data: calldata,
-      gas: ERC20.TRANSFERGAS,
+      gas: WALLETVIEW.gasLimit(),
       gasPrice: (WALLETVIEW.gasPrice() * 1e09),
       nonce: WALLETVIEW.nonce()
     };
@@ -219,7 +224,7 @@ var WALLETCTRL = (function() {
 
     let val =
       COMMONVIEW.shiftValueRightDecimals( WALLETVIEW.getContractValue(), 18 );
-    let gasl = WALLETVIEW.getGasLimit();
+    let gasl = WALLETVIEW.gasLimit();
 
     txobj = {
       to: sca,
@@ -247,7 +252,7 @@ var WALLETCTRL = (function() {
     if (!gasl || parseInt(gasl) == 0) {
       web3.eth.estimateGas( txobj ).then( est => {
         let estint = parseInt( est * 1.5 )
-        WALLETVIEW.setGasLimit( estint )
+        WALLETVIEW.gasLimit( estint )
         gasl = estint;
         txobj.gas = gasl;
         setTxFields();
