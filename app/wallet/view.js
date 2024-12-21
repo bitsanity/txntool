@@ -157,7 +157,8 @@ var WALLETVIEW = (function() {
       contents +=
       '<tr>' +
         '<td>' + parm.name + '</td>' +
-        '<td class=units>(' + parm.type + ')</td>' +
+        '<td id=ParamType' + parm.ix + ' ' +
+             'class=units>' + parm.type + '</td>' +
         '<td><input id=Param' + parm.ix + ' class=data type=text size=56 ' +
                'onchange="WALLETCTRL.calcTx()" />' +
         '</td>' +
@@ -172,8 +173,15 @@ var WALLETVIEW = (function() {
     let result = [];
 
     let table = document.getElementById( "ParameterValuesTable" );
+
     for (let ii = 0; ii < table.rows.length; ii++) {
-      result.push( $('#Param'+ii).val() );
+      let parmtype = $('#ParamType'+ii).html()
+      let parmval = $('#Param'+ii).val()
+
+      if (parmtype === 'bool')
+        result.push( parmval.toUpperCase() === 'TRUE' )
+      else
+        result.push( parmval )
     }
     return result;
   }

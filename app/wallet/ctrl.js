@@ -3,7 +3,7 @@ var WALLETCTRL = (function() {
   var abi;
   var txobj;
 
-  function initWalletTab() {
+  function updateUser() {
     try {
       ACCOUNTMODEL.refreshTxCount();
     }
@@ -15,6 +15,10 @@ var WALLETCTRL = (function() {
           calcTx();
         }, 250 );
     }
+  }
+
+  function initWalletTab() {
+    updateUser()
 
     COMMONMODEL.gasPrice( err => {
       console.log( err.toString() );
@@ -322,7 +326,7 @@ var WALLETCTRL = (function() {
     let signedtx = ETHJS.Transaction.fromTxData( hextx );
     let serializedtx = signedtx.serialize();
 
-    initWalletTab();
+    updateUser();
     setTxFields();
     WALLETVIEW.signedTransaction( COMMONMODEL.toHex(serializedtx) );
   }

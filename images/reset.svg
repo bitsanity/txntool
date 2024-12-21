@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="693.75"
+   height="693.68903"
+   viewBox="0 0 444 443.96098"
+   data-name="Layer 1"
+   id="Layer_1"
+   version="1.1"
+   sodipodi:docname="reset.svg"
+   style="fill:#000000"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
+  <metadata
+     id="metadata858">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs856" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="640"
+     inkscape:window-height="480"
+     id="namedview854"
+     showgrid="false"
+     inkscape:zoom="1.3475"
+     inkscape:cx="346.875"
+     inkscape:cy="346.84453"
+     inkscape:current-layer="Layer_1" />
+  <path
+     d="M 30,221.9805 H 0 A 222,222 0 0 1 396,84.130498 v -33.15 h 30 V 155.9805 H 321 v -30 h 67.27 A 192.21,192.21 0 0 0 222,29.980498 c -105.87,0 -192,86.130002 -192,192.000002 z m 384,0 c 0,105.87 -86.13,192 -192,192 a 192.21,192.21 0 0 1 -166.27,-96 H 123 v -30 H 18 v 105 h 30 v -33.15 a 222,222 0 0 0 396,-137.85 z"
+     id="path851"
+     inkscape:connector-curvature="0" />
+</svg>

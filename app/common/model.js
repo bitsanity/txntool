@@ -3,7 +3,7 @@ var COMMONMODEL = (function() {
   var web3;
 
   function ethTransferGasUnits() {
-    return 21000;
+    return 22500;
   }
 
   function tokTransferGasUnits() {
